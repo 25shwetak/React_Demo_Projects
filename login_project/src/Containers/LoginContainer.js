@@ -13,7 +13,7 @@ const LoginContainer = () => {
   }
 
   const schema = yup.object().shape({
-        username: yup.string().email(),
+        username: yup.string().email().required(),
         password: yup.string().required(),
       });
 
