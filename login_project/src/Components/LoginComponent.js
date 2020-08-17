@@ -2,21 +2,26 @@ import React from "react";
 import { Button, Form, FormGroup, FormFeedback, Label, Input, Row, Col, Container, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
 
-const LoginComponent = (props) => {
-  let {username, password, setUsername, setPassword, schema, 
-    validateData, usernameError, passwordError} = props;
+const LoginComponent = ({validateData, state, dispatch, setUsernameErrorToNull, setPasswordErrorToNull}) => {
+  
+  /*let {username, password, setUsername, setPassword, 
+    validateData, usernameError, passwordError, setUsernameErrorToNull, setPasswordErrorToNull} = props;*/
+  const {username, password, usernameError, passwordError} = state
+
   const setUsernameWrapper = (val) => {
-    setUsername(val.target.value)
+    //setUsername(val.target.value)
+    dispatch({type: 'field', field: 'username', value: val.target.value});
   }
 
   const setPasswordWrapper = (val) => {
-    setPassword(val.target.value)
+    //setPassword(val.target.value)
+    dispatch({type: 'field', field: 'password', value: val.target.value});
   }
 
   return (
     <Container>
       <Row>
-        <Col sm={{size: 6, offset: 3}} classname="m-auto">
+        <Col sm={{size: 6, offset: 3}} className="m-auto">
           <Card>
             <CardBody>
               <Form>
@@ -28,6 +33,7 @@ const LoginComponent = (props) => {
                         placeholder="enter your email" 
                         value={username} 
                         onChange={setUsernameWrapper}
+                        onFocus={setUsernameErrorToNull}
                         invalid={(usernameError !== null ? true : false)}/>
                   <FormFeedback>{usernameError}</FormFeedback>
                 </FormGroup>
@@ -40,11 +46,12 @@ const LoginComponent = (props) => {
                         placeholder="enter your password" 
                         value={password} 
                         onChange={setPasswordWrapper}
+                        onFocus={setPasswordErrorToNull}
                         invalid={(passwordError !== null) ? true : false}/>
                   <FormFeedback>{passwordError}</FormFeedback>
                 </FormGroup>
               </Form>
-              <Button onClick={validateData}>Login</Button>
+              <Button onClick={() => {validateData();}}>Login</Button>
             </CardBody>
           </Card>
         </Col>
@@ -56,10 +63,9 @@ const LoginComponent = (props) => {
 export default LoginComponent;
 
 LoginComponent.propTypes = {
-  username: PropTypes.string.isRequired,
-  password: PropTypes.string.isRequired,
-  setUsername: PropTypes.func.isRequired,
-  setPassword: PropTypes.func.isRequired
+  validateData: PropTypes.func.isRequired,
+  setUsernameErrorToNull: PropTypes.func.isRequired,
+  setPasswordErrorToNull: PropTypes.func.isRequired
 }
 
 LoginComponent.defaultProps = {
