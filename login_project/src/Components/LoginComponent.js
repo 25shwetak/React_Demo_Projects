@@ -1,21 +1,21 @@
 import React from "react";
 import { Button, Form, FormGroup, FormFeedback, Label, Input, Row, Col, Container, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
+import { LOGIN_REDUCER } from "../shared/actionConstants";
 
-const LoginComponent = ({validateData, state, dispatch, setUsernameErrorToNull, setPasswordErrorToNull}) => {
+const LoginComponent = ({validateData, dispatch, passwordError, usernameError, password, username, setUsernameErrorToNull, setPasswordErrorToNull}) => {
   
   /*let {username, password, setUsername, setPassword, 
     validateData, usernameError, passwordError, setUsernameErrorToNull, setPasswordErrorToNull} = props;*/
-  const {username, password, usernameError, passwordError} = state
 
   const setUsernameWrapper = (val) => {
     //setUsername(val.target.value)
-    dispatch({type: 'field', field: 'username', value: val.target.value});
+    dispatch({type: LOGIN_REDUCER.SET_USERNAME, value: val.target.value});
   }
 
   const setPasswordWrapper = (val) => {
     //setPassword(val.target.value)
-    dispatch({type: 'field', field: 'password', value: val.target.value});
+    dispatch({type: LOGIN_REDUCER.SET_PASSWORD, value: val.target.value});
   }
 
   return (
