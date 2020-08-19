@@ -3,8 +3,8 @@ import LoginComponent from "../Components/LoginComponent";
 import * as yup from "yup";
 import apiHelper from "../apis/apiHelper";
 import { useDispatch, useSelector } from "react-redux";
-import { LOGIN_REDUCER } from "../shared/actionConstants";
 import { Redirect } from "react-router-dom";
+import {setUserDetails, setUsernameError, setPasswordError, resetErrors, setErrors} from "../actions/loginActions";
 
 const LoginContainer = () => {
   //const [state, dispatch] = useReducer(loginReducer, initialState)
@@ -32,26 +32,26 @@ const LoginContainer = () => {
       });
 
   const setUsernameErrorToNull = () => {
-    dispatch({type: LOGIN_REDUCER.SET_USERNAME_ERROR, value: null});
+    dispatch(setUsernameError());
   }
 
   const setPasswordErrorToNull = () => {
-    dispatch({type: LOGIN_REDUCER.SET_PASSWORD_ERROR, value: null});
+    dispatch(setPasswordError());
   }
 
   const validateData = () => {
-    dispatch({ type: LOGIN_REDUCER.RESET_ERRORS });
+    dispatch(resetErrors());
     schema.validate({ username, password }, { abortEarly: false })
     .then(() => {
       apiHelper('post', 'https://api.taiga.io/api/v1/auth', {username, password, type: "normal"})
       .then(({data}) => {
-        dispatch({ type: LOGIN_REDUCER.SET_USER_DETAILS, value: data });
+        dispatch(setUserDetails(data));
         console.log(data)
       })
     })
     .catch((err) => {
       err.inner.forEach((ele) => {
-        dispatch({ type: `SET_${ele.path.toUpperCase()}_ERROR`, value: ele.message });
+        dispatch(setErrors(ele));
       });
     });
   }

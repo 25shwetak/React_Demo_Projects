@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, FormGroup, FormFeedback, Label, Input, Row, Col, Container, Card, CardBody} from 'reactstrap';
 import PropTypes from 'prop-types';
-import { LOGIN_REDUCER } from "../shared/actionConstants";
+import {setUsername, setPassword} from "../actions/loginActions";
 
 const LoginComponent = ({validateData, dispatch, passwordError, usernameError, password, username, setUsernameErrorToNull, setPasswordErrorToNull}) => {
   
@@ -10,12 +10,12 @@ const LoginComponent = ({validateData, dispatch, passwordError, usernameError, p
 
   const setUsernameWrapper = (val) => {
     //setUsername(val.target.value)
-    dispatch({type: LOGIN_REDUCER.SET_USERNAME, value: val.target.value});
+    dispatch(setUsername(val));
   }
 
   const setPasswordWrapper = (val) => {
     //setPassword(val.target.value)
-    dispatch({type: LOGIN_REDUCER.SET_PASSWORD, value: val.target.value});
+    dispatch(setPassword(val));
   }
 
   return (
