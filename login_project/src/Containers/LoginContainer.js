@@ -1,10 +1,9 @@
 import React from "react";
 import LoginComponent from "../Components/LoginComponent";
 import * as yup from "yup";
-import apiHelper from "../apis/apiHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import {setUserDetails, setUsernameError, setPasswordError, resetErrors, setErrors} from "../actions/loginActions";
+import { setUsernameError, setPasswordError, resetErrors, setErrors, loginRequest} from "../actions/loginActions";
 
 const LoginContainer = () => {
   //const [state, dispatch] = useReducer(loginReducer, initialState)
@@ -39,21 +38,38 @@ const LoginContainer = () => {
     dispatch(setPasswordError());
   }
 
+  // const validateData = () => {
+  //   dispatch(resetErrors());
+  //   schema.validate({ username, password }, { abortEarly: false })
+  //   .then(() => {
+  //     apiHelper('post', 'https://api.taiga.io/api/v1/auth', {username, password, type: "normal"})
+  //     .then(({data}) => {
+  //       dispatch(setUserDetails(data));
+  //       console.log(data)
+  //     })
+  //   })
+  //   .catch((err) => {
+  //     err.inner.forEach((ele) => {
+  //       dispatch(setErrors(ele));
+  //     });
+  //   });
+  // }
+
   const validateData = () => {
     dispatch(resetErrors());
-    schema.validate({ username, password }, { abortEarly: false })
-    .then(() => {
-      apiHelper('post', 'https://api.taiga.io/api/v1/auth', {username, password, type: "normal"})
-      .then(({data}) => {
-        dispatch(setUserDetails(data));
-        console.log(data)
-      })
+    schema.isValid({username, password})
+    .then(function(valid) {
+        if(!valid){
+          schema.validate({ username, password }, { abortEarly: false })
+          .catch((err) => {
+            err.inner.forEach((ele) => {
+                dispatch(setErrors(ele));
+            });
+          });
+        } else {
+            dispatch(loginRequest({username, password}));
+        }
     })
-    .catch((err) => {
-      err.inner.forEach((ele) => {
-        dispatch(setErrors(ele));
-      });
-    });
   }
 
   if (userDetails.auth_token){

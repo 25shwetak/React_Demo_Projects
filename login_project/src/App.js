@@ -4,11 +4,23 @@ import React from 'react';
 import Routes from "./routes/Routes";
 
 import {Provider} from 'react-redux';
-import {createStore, combineReducers} from "redux";
+import {createStore, combineReducers, applyMiddleware} from "redux";
 import loginDetailsReducer from './reducer/loginDetailsReducer';
 import projectsReducer from './reducer/projectsReducer';
+import createSagaMiddleware from 'redux-saga';
+import userSaga from "./sagas/userSaga";
 
-const store = createStore(combineReducers({loginDetailsReducer, projectsReducer}))
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  combineReducers({
+    loginDetailsReducer, 
+    projectsReducer
+  }), 
+  applyMiddleware(sagaMiddleware)
+);
+
+sagaMiddleware.run(userSaga);
 
 function App() {
   return (

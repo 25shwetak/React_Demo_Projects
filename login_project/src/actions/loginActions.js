@@ -47,3 +47,18 @@ export const setPassword = val => {
     value: val.target.value
   }
 }
+
+export const loginRequest = data => {
+    return {
+        type: LOGIN_REDUCER.LOGIN_REQUEST,
+        value: data
+    }
+}
+
+
+export const loginFailed = error => {
+    return {
+        type: LOGIN_REDUCER.LOGIN_FAILED,
+        value: error
+    }
+}

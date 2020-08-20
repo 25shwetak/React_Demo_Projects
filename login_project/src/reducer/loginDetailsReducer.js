@@ -1,11 +1,13 @@
 import { LOGIN_REDUCER } from "../shared/actionConstants";
 
-const initialState = {
+export const initialState = {
   username: "",
   password: "",
   userDetails: {},
   usernameError: null,
   passwordError: null,
+  request: {},
+  loginFail: {}
 };
 
 const loginDetailsReducer = (state = initialState, action) => {
