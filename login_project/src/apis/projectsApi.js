@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const getProjects = (url, headers) => {
-    return axios.get({
-        url,
-        headers
+const getProjectsApi = () => {
+    return axios({
+        method: 'get',
+        url: 'https://api.taiga.io/api/v1/projects'
     });
 }
-  
-export default getProjects;
+
+export default getProjectsApi;

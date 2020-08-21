@@ -7,7 +7,11 @@ describe("Login Reducer", () => {
   });
 
   it("set email", () => {
-    const email = "XXX";
-    expect(loginDetailsReducer(initialState, setUsername(email))).toEqual({ ...initialState, email });
+    const email = {
+      target: {
+        value: "XXX"
+      }
+    }
+    expect(loginDetailsReducer(initialState, setUsername(email))).toEqual({ ...initialState, username: "XXX" });
   })
 });

@@ -17,6 +17,6 @@ export function* loginSaga(action) {
 
 //watcher saga
 export default function* userSaga() {
-    yield takeLatest(LOGIN_REDUCER.LOGIN_REQUEST, loginSaga);
+  yield takeLatest(LOGIN_REDUCER.LOGIN_REQUEST, loginSaga);
 }
 

@@ -1,6 +1,4 @@
 import React from 'react';
-//import LoginContainer from "./Containers/LoginContainer";
-//import DashboardConatiner from "./Containers/DashboardContainer";
 import Routes from "./routes/Routes";
 
 import {Provider} from 'react-redux';
@@ -8,9 +6,9 @@ import {createStore, combineReducers, applyMiddleware} from "redux";
 import loginDetailsReducer from './reducer/loginDetailsReducer';
 import projectsReducer from './reducer/projectsReducer';
 import createSagaMiddleware from 'redux-saga';
-import userSaga from "./sagas/userSaga";
+import rootSaga from "./sagas/rootSaga";
 
-const sagaMiddleware = createSagaMiddleware();
+const sagaMiddleware = createSagaMiddleware()
 
 const store = createStore(
   combineReducers({
@@ -20,12 +18,10 @@ const store = createStore(
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(userSaga);
+sagaMiddleware.run(rootSaga);
 
 function App() {
   return (
-    //<LoginContainer />
-    //<DashboardConatiner />
     <Provider store={store}>
       <Routes />
     </Provider>
